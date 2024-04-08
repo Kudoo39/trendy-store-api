@@ -1,57 +1,57 @@
-import { NextFunction, Request, Response } from "express";
+import { Request } from 'express'
 
 export type Product = {
-  title: string;
-  price: number;
-  description: string;
-  size: number;
-  images: string;
-  categoryId: string;
-};
+  title: string
+  price: number
+  description: string
+  size: number
+  images: string
+  categoryId: string
+}
 
 export type CategoryProductsQuery = {
-  limit?: number;
-  offset?: number;
-  searchQuery?: string;
-  minPrice?: number;
-  maxPrice?: number;
-};
+  limit?: number
+  offset?: number
+  searchQuery?: string
+  minPrice?: number
+  maxPrice?: number
+}
 
 export type User = {
-  firstname: string;
-  lastname: string;
-  password: string;
-  email: string;
-  role: string;
-  avatar: string;
-  orders?: Order[];
-  banStatus: boolean;
-};
+  firstname: string
+  lastname: string
+  password: string
+  email: string
+  role: string
+  avatar: string
+  orders?: Order[]
+  banStatus: boolean
+}
 
 export type DecodedUser = {
-  _id: string;
-  email: string;
-  role: string;
-  iat: number;
-  exp: number;
-};
+  _id: string
+  email: string
+  role: string
+  iat: number
+  exp: number
+}
 
 export type WithAuthRequest = Request & {
   decodedUser?: DecodedUser
 }
 
 export type Order = {
-  products: Product[];
-  totalPrice: number;
-  createAt: string;
-};
+  products: Product[]
+  totalPrice: number
+  createAt: string
+}
 
 export type Category = {
-  name: string;
-  image: string;
-};
+  name: string
+  image: string
+}
 
 export type OrderProduct = {
-  productId: string;
-  quantity: number;
-};
+  productId: string
+  quantity: number
+}

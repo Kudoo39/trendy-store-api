@@ -1,5 +1,5 @@
-import { NotFoundError } from "../errors/ApiError";
-import Product, { ProductDocument } from "../model/Product";
+import { NotFoundError } from '../errors/ApiError'
+import Product, { ProductDocument } from '../model/Product'
 
 const getAllProducts = async (
   limit: number,
@@ -8,24 +8,25 @@ const getAllProducts = async (
   minPrice: number,
   maxPrice: number
 ): Promise<ProductDocument[]> => {
-  try { 
-    const totalCount = await Product.countDocuments();
+  try {
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    const totalCount = await Product.countDocuments()
     return await Product.find({
       title: { $regex: searchQuery },
-      price: { $gte: minPrice, $lte: maxPrice },
+      price: { $gte: minPrice, $lte: maxPrice }
     })
       // .sort({ title: 1 })
       .populate({
-        path: "categoryId",
-        select: { name: 1 },
+        path: 'categoryId',
+        select: { name: 1 }
       })
       .limit(limit)
       .skip(offset)
-      .exec();
+      .exec()
   } catch (error) {
-    throw new Error("Failed to fetch products");
+    throw new Error('Failed to fetch products')
   }
-};
+}
 
 const getCategoryProducts = async (
   categoryId: string,
@@ -35,58 +36,59 @@ const getCategoryProducts = async (
   minPrice: number,
   maxPrice: number
 ): Promise<ProductDocument[]> => {
-  try { 
-    const totalCount = await Product.countDocuments({ categoryId });
+  try {
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    const totalCount = await Product.countDocuments({ categoryId })
     return await Product.find({
       categoryId,
       title: { $regex: searchQuery },
-      price: { $gte: minPrice, $lte: maxPrice },
+      price: { $gte: minPrice, $lte: maxPrice }
     })
       .populate({
-        path: "categoryId",
-        select: { name: 1 },
+        path: 'categoryId',
+        select: { name: 1 }
       })
       .limit(limit)
       .skip(offset)
-      .exec();
+      .exec()
   } catch (error) {
-    throw new Error("Failed to fetch products");
+    throw new Error('Failed to fetch products')
   }
-};
+}
 
 const createProduct = async (Product: ProductDocument): Promise<ProductDocument> => {
   try {
-    return await Product.save();
+    return await Product.save()
   } catch (error) {
-    throw new Error("Failed to create product");
+    throw new Error('Failed to create product')
   }
-};
+}
 
 const getProductById = async (id: string): Promise<ProductDocument | undefined> => {
-  const foundProduct = await Product.findById(id);
+  const foundProduct = await Product.findById(id)
   if (foundProduct) {
-    return foundProduct;
+    return foundProduct
   }
-  throw new NotFoundError();
-};
+  throw new NotFoundError()
+}
 
 const deleteProductById = async (id: string) => {
-  const foundProduct = await Product.findByIdAndDelete(id);
+  const foundProduct = await Product.findByIdAndDelete(id)
   if (foundProduct) {
-    return foundProduct;
+    return foundProduct
   }
-  throw new NotFoundError();
-};
+  throw new NotFoundError()
+}
 
 const updateProduct = async (id: string, newInformation: Partial<ProductDocument>) => {
   const updatedProduct = await Product.findByIdAndUpdate(id, newInformation, {
-    new: true,
-  });
+    new: true
+  })
   if (updatedProduct) {
-    return updatedProduct;
+    return updatedProduct
   }
-  throw new NotFoundError();
-};
+  throw new NotFoundError()
+}
 
 export default {
   getAllProducts,
@@ -94,5 +96,5 @@ export default {
   createProduct,
   getProductById,
   deleteProductById,
-  updateProduct,
-};
+  updateProduct
+}

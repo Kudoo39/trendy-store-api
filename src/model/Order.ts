@@ -1,15 +1,15 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document } from 'mongoose'
 
-import { Order } from "../misc/type";
-import { OrderProductSchema } from "./OrderProduct";
+import { Order } from '../misc/type'
+import { OrderProductSchema } from './OrderProduct'
 
-export type OrderDocument = Document & Order;
+export type OrderDocument = Document & Order
 
 export const OrderSchema = new mongoose.Schema({
   products: [
     {
-    type: OrderProductSchema
-    },
+      type: OrderProductSchema
+    }
   ],
   totalPrice: {
     type: Number,
@@ -17,8 +17,8 @@ export const OrderSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
-  },
-});
+    default: Date.now()
+  }
+})
 
-export default mongoose.model<OrderDocument>("Order", OrderSchema);
+export default mongoose.model<OrderDocument>('Order', OrderSchema)
