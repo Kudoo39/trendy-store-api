@@ -1,15 +1,6 @@
 # E-commerce API
 
-## Members
-
-1. [Thuy Dang](https://github.com/Kimmi17)
-2. [Redeat Haile](https://github.com/RedHaile)
-3. [Khang Nguyen](https://github.com/Kudoo39)
-
-## Description
-
-This repository contains code for a backend application built using Node.js, Express.js, Mongoose, and TypeScript. The application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
-Provide a brief overview of the project, including its purpose and main functionalities.
+A backend application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
 ## Table of Contents
 
@@ -27,7 +18,7 @@ Provide a brief overview of the project, including its purpose and main function
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (v18.x or later recommended)
+- Node.js (v18.18.0 or later recommended)
 - npm (Node Package Manager) or yarn
 
 
