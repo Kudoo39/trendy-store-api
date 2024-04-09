@@ -1,17 +1,18 @@
 import express from 'express'
 
 import {
+  banUser,
   createUser,
   deleteUser,
-  loginUser,
   getAllUsers,
-  updatedUser,
+  loginUser,
   requestPassword,
-  banUser,
-  unbanUser
+  unbanUser,
+  updatedPassword,
+  updatedUser
 } from '../controllers/users'
-import verifyJWT from '../middlewares/verifyJWT'
 import adminCheck from '../middlewares/adminCheck'
+import verifyJWT from '../middlewares/verifyJWT'
 import { validateCreateUser, validateLoginUser } from '../validations/userValidation'
 
 const router = express.Router()
@@ -26,6 +27,9 @@ router.post('/', validateCreateUser, createUser)
 
 // UPDATE USER
 router.put('/:userId', verifyJWT, updatedUser)
+
+// CHANGE PASSWORD
+router.put('/password', updatedPassword)
 
 // FORGET PASSWORD REQUEST
 router.post('/password', requestPassword)
