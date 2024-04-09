@@ -24,7 +24,7 @@ const ProductSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: 'https://picsum.photos/seed/picsum/600/400'
+    default: 'https://picsum.photos/800'
   },
   categoryId: {
     type: Schema.Types.ObjectId,

@@ -23,16 +23,6 @@ export async function createUser(request: Request, response: Response, next: Nex
   try {
     const { firstname, lastname, email, password, role } = request.body
 
-    // Check the required fields are provided
-    if (!firstname || !lastname || !email || !password || !role) {
-      throw new BadRequest('Fill out the required fields')
-    }
-
-    // check the valid role
-    if (role !== 'customer' && role !== 'admin') {
-      throw new BadRequest('Invalid role')
-    }
-
     // Validate email
     if (!validator.isEmail(email)) {
       throw new BadRequest('Invalid email')
@@ -102,11 +92,6 @@ export async function loginUser(request: Request, response: Response, next: Next
 
 export async function updatedUser(request: Request, response: Response, next: NextFunction) {
   try {
-    const saltRounds = 10
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hashedPassword = await bcrypt.hash(request.body.password, salt)
-    request.body.password = hashedPassword
-
     const updatedUser = await usersService.updateUser(request.params.userId, request.body)
 
     response.status(200).json(updatedUser)
@@ -120,6 +105,35 @@ export async function updatedUser(request: Request, response: Response, next: Ne
         message: 'wrong id format'
       })
       return
+    }
+
+    next(new InternalServerError())
+  }
+}
+
+export async function updatedPassword(request: Request, response: Response, next: NextFunction) {
+  try {
+    const { email, password, newPassword } = request.body
+    const userData = await usersService.getUserByEmail(email)
+    const hashedPassword = userData.password
+
+    const isMatched = await bcrypt.compare(password, hashedPassword)
+
+    if (isMatched === false && password !== hashedPassword) {
+      throw new BadRequest('Wrong password, please try again!')
+    }
+
+    const saltRounds = 10
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hashedNewPassword = await bcrypt.hash(newPassword, salt)
+    request.body.password = hashedNewPassword
+
+    const updatedUserPassword = await usersService.changePassword(email, hashedNewPassword)
+
+    response.status(200).json(updatedUserPassword)
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      apiErrorhandler(error, request, response, next)
     }
 
     next(new InternalServerError())

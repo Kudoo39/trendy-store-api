@@ -13,10 +13,10 @@ type UserSchema = Schema & {
 
 export const createUserValidation: UserSchema = Joi.object({
   firstname: Joi.string().required().min(3).max(20).trim().strict(),
-  lastname: Joi.string().required().min(3).max(50).trim().strict(),
+  lastname: Joi.string().required().min(1).max(20).trim().strict(),
   email: Joi.string().email().required(),
   password: Joi.string().required().min(3).max(50).trim().strict(),
-  role: Joi.string().valid('customer', 'admin').required()
+  role: Joi.string().valid('customer', 'admin')
 }) as UserSchema
 
 export const validateCreateUser = async (req: Request, res: Response, next: NextFunction) => {

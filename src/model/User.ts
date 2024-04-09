@@ -25,12 +25,12 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
+    default: 'customer',
     enum: ['customer', 'admin']
   },
   avatar: {
     type: String,
-    default: 'https://picsum.photos/seed/picsum/600/400'
+    default: 'https://picsum.photos/800'
   },
   orders: [
     {

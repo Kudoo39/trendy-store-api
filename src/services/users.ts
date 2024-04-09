@@ -27,9 +27,34 @@ const createUser = async (user: UserDocument): Promise<UserDocument> => {
 
 const updateUser = async (userId: string, userData: Partial<UserDocument>): Promise<UserDocument | null> => {
   try {
-    return await User.findByIdAndUpdate(userId, userData, { new: true })
+    const { firstname, lastname, email, password } = userData;
+
+    const updatedData: Partial<UserDocument> = {};
+    if (firstname) updatedData.firstname = firstname;
+    if (lastname) updatedData.lastname = lastname;
+    if (email) updatedData.email = email;
+    if (password) updatedData.password = password;
+
+    return await User.findByIdAndUpdate(userId, updatedData, { new: true })
   } catch (error) {
     throw new NotFoundError()
+  }
+}
+
+const changePassword = async (email: string, newPassword: string): Promise<UserDocument | null> => {
+  try {    
+    const foundUser = await User.findOne({ email });
+
+    if (!foundUser) {
+      throw new NotFoundError('User not found');
+    }
+
+    foundUser.password = newPassword;
+
+    await foundUser.save();
+    return foundUser;
+  } catch (error) {
+    throw new NotFoundError('Invalid user!')
   }
 }
 
@@ -50,4 +75,4 @@ const getUserByEmail = async (email: string): Promise<UserDocument> => {
   throw new NotFoundError('This email is not existed!')
 }
 
-export default { getAllUsers, createUser, updateUser, deleteUser, getUserByEmail }
+export default { getAllUsers, createUser, updateUser, changePassword, deleteUser, getUserByEmail }
