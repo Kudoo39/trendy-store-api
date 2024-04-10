@@ -7,11 +7,11 @@ const getAllProducts = async (
   searchQuery: string,
   minPrice: number,
   maxPrice: number
-): Promise<ProductDocument[]> => {
+): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
   try {
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    const totalCount = await Product.countDocuments()
-    return await Product.find({
+    const totalProduct = await Product.countDocuments()
+    const products = await Product.find({
       title: { $regex: searchQuery },
       price: { $gte: minPrice, $lte: maxPrice }
     })
@@ -23,6 +23,7 @@ const getAllProducts = async (
       .limit(limit)
       .skip(offset)
       .exec()
+    return { totalProduct, products };
   } catch (error) {
     throw new Error('Failed to fetch products')
   }
@@ -35,11 +36,11 @@ const getCategoryProducts = async (
   searchQuery: string,
   minPrice: number,
   maxPrice: number
-): Promise<ProductDocument[]> => {
+): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
   try {
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    const totalCount = await Product.countDocuments({ categoryId })
-    return await Product.find({
+    const totalProduct = await Product.countDocuments({ categoryId })
+    const products = await Product.find({
       categoryId,
       title: { $regex: searchQuery },
       price: { $gte: minPrice, $lte: maxPrice }
@@ -51,6 +52,7 @@ const getCategoryProducts = async (
       .limit(limit)
       .skip(offset)
       .exec()
+    return { totalProduct, products };
   } catch (error) {
     throw new Error('Failed to fetch products')
   }
