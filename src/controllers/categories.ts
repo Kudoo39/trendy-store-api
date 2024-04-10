@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 import categoriesService from '../services/categories'
 import Category, { CategoryDocument } from '../model/Category'
-import { InternalServerError, NotFoundError } from '../errors/ApiError'
+import { BadRequest, InternalServerError, NotFoundError } from '../errors/ApiError'
 import apiErrorhandler from '../middlewares/apiErrorhandler'
 
 export async function getAllCategories(_: Request, response: Response, next: NextFunction) {
@@ -52,6 +52,10 @@ export async function updateCategory(request: Request, response: Response, next:
     const updatedCategory = await categoriesService.updateCategory(categoryId, newInformation)
     response.status(200).json(updatedCategory)
   } catch (error) {
+    if (error instanceof BadRequest) {
+      apiErrorhandler(error, request, response, next)
+    }
+
     if (error instanceof NotFoundError) {
       apiErrorhandler(error, request, response, next)
     }
