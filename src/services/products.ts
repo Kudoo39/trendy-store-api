@@ -9,7 +9,6 @@ const getAllProducts = async (
   maxPrice: number
 ): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
   try {
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     const totalProduct = await Product.countDocuments()
     const products = await Product.find({
       title: { $regex: searchQuery },
@@ -38,7 +37,6 @@ const getCategoryProducts = async (
   maxPrice: number
 ): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
   try {
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     const totalProduct = await Product.countDocuments({ categoryId })
     const products = await Product.find({
       categoryId,
