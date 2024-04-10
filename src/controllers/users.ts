@@ -122,7 +122,7 @@ export async function updatedPassword(request: Request, response: Response, next
     if (isMatched === false && password !== hashedPassword) {
       throw new BadRequest('Wrong password, please try again!')
     }
-
+    
     const saltRounds = 10
     const salt = await bcrypt.genSalt(saltRounds)
     const hashedNewPassword = await bcrypt.hash(newPassword, salt)
@@ -133,6 +133,10 @@ export async function updatedPassword(request: Request, response: Response, next
     response.status(200).json(updatedUserPassword)
   } catch (error) {
     if (error instanceof NotFoundError) {
+      apiErrorhandler(error, request, response, next)
+    }
+
+    if (error instanceof BadRequest) {
       apiErrorhandler(error, request, response, next)
     }
 
@@ -157,11 +161,8 @@ export async function requestPassword(request: Request, response: Response, next
       apiErrorhandler(error, request, response, next)
     }
 
-    if (error instanceof mongoose.Error.CastError) {
-      response.status(404).json({
-        message: 'wrong id format'
-      })
-      return
+    if (error instanceof BadRequest) {
+      apiErrorhandler(error, request, response, next)
     }
 
     next(new InternalServerError())

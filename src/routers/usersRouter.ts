@@ -29,10 +29,10 @@ router.post('/', validateCreateUser, createUser)
 router.put('/:userId', verifyJWT, updatedUser)
 
 // CHANGE PASSWORD
-router.put('/change-password', updatedPassword)
+router.patch('/password', updatedPassword)
 
 // FORGET PASSWORD REQUEST
-router.post('/forgot-password', requestPassword)
+router.post('/password', requestPassword)
 
 // DELETE USER
 router.delete('/:userId', deleteUser)
