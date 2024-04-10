@@ -18,15 +18,14 @@ export async function getAllProducts(request: Request, response: Response, next:
       maxPrice = 2e64
     }: CategoryProductsQuery = request.query
 
-    const Products = await ProductsService.getAllProducts(
+    const { totalProduct, products } = await ProductsService.getAllProducts(
       Number(limit),
       Number(offset),
       searchQuery as string,
       Number(minPrice),
       Number(maxPrice)
     )
-    const count = Products.length
-    response.status(200).json({ totalCount: count, products: Products })
+    response.status(200).json({ totalProduct: totalProduct, products: products })
   } catch (error) {
     next(new InternalServerError())
   }
@@ -43,7 +42,7 @@ export async function getCategoryProducts(request: Request, response: Response, 
       maxPrice = 2e64
     }: CategoryProductsQuery = request.query
 
-    const Products = await ProductsService.getCategoryProducts(
+    const { totalProduct, products } = await ProductsService.getCategoryProducts(
       request.params.categoryId as string,
       Number(limit),
       Number(offset),
@@ -51,8 +50,7 @@ export async function getCategoryProducts(request: Request, response: Response, 
       Number(minPrice),
       Number(maxPrice)
     )
-    const count = Products.length
-    response.status(200).json({ totalCount: count, products: Products })
+    response.status(200).json({ totalProduct: totalProduct, products: products })
   } catch (error) {
     next(new InternalServerError())
   }
