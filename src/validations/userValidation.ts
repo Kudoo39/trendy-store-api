@@ -16,7 +16,8 @@ export const createUserValidation: UserSchema = Joi.object({
   lastname: Joi.string().required().min(1).max(20).trim().strict(),
   email: Joi.string().email().required(),
   password: Joi.string().required().min(3).max(50).trim().strict(),
-  role: Joi.string().valid('customer', 'admin')
+  role: Joi.string().valid('customer', 'admin'),
+  avatar: Joi.string()
 }) as UserSchema
 
 export const validateCreateUser = async (req: Request, res: Response, next: NextFunction) => {

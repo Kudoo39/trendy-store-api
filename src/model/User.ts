@@ -30,7 +30,6 @@ const UserSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: 'https://picsum.photos/800'
   },
   orders: [
     {
