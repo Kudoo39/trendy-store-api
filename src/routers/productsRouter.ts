@@ -20,7 +20,8 @@ router.get('/', getAllProducts)
 router.get('/category/:categoryId', getCategoryProducts)
 
 // CREATE A PRODUCT
-router.post('/', verifyJWT, adminCheck, createProduct)
+// router.post('/', verifyJWT, adminCheck, createProduct)
+router.post('/', createProduct)
 
 // GET A PRODUCT
 router.get('/:productId', getProduct)

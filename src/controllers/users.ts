@@ -21,7 +21,7 @@ export async function getAllUsers(_: Request, response: Response, next: NextFunc
 // REGISTER
 export async function createUser(request: Request, response: Response, next: NextFunction) {
   try {
-    const { firstname, lastname, email, password, role } = request.body
+    const { firstname, lastname, email, password, role, avatar } = request.body
 
     // Validate email
     if (!validator.isEmail(email)) {
@@ -32,12 +32,17 @@ export async function createUser(request: Request, response: Response, next: Nex
     const salt = await bcrypt.genSalt(saltRounds)
     const hashedPassword = await bcrypt.hash(password, salt)
 
+    // set random avatar if users not provide
+    const defaultAvatar = 'https://picsum.photos/800';
+    const userAvatar = avatar ? avatar : defaultAvatar;
+
     const user = new User({
       firstname: firstname,
       lastname: lastname,
       email: email,
       password: hashedPassword,
-      role: role
+      role: role,
+      avatar: userAvatar
     })
     const newUser = await usersService.createUser(user)
     response.status(201).json(newUser)
