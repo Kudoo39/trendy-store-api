@@ -66,6 +66,10 @@ const createProduct = async (Product: ProductDocument): Promise<ProductDocument>
 
 const getProductById = async (id: string): Promise<ProductDocument | undefined> => {
   const foundProduct = await Product.findById(id)
+    .populate({
+      path: 'categoryId',
+      select: { name: 1 }
+    })
   if (foundProduct) {
     return foundProduct
   }

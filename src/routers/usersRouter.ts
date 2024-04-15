@@ -1,6 +1,7 @@
 import express from 'express'
 
 import {
+  authenticateUser,
   banUser,
   createUser,
   deleteUser,
@@ -36,6 +37,9 @@ router.post('/password', requestPassword)
 
 // DELETE USER
 router.delete('/:userId', deleteUser)
+
+// AUTHENTICATE USER
+router.get('/profile', verifyJWT, authenticateUser)
 
 // BAN & UNBAN USERS
 router.post('/:userId/ban', verifyJWT, adminCheck, banUser)

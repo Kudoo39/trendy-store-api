@@ -8,6 +8,7 @@ import usersService from '../services/users'
 import { BadRequest, InternalServerError, NotFoundError, ConflictError } from '../errors/ApiError'
 import User from '../model/User'
 import apiErrorhandler from '../middlewares/apiErrorhandler'
+import { WithAuthRequest } from '../misc/type'
 
 export async function getAllUsers(_: Request, response: Response, next: NextFunction) {
   try {
@@ -194,6 +195,20 @@ export async function deleteUser(request: Request, response: Response, next: Nex
       return
     }
 
+    next(new InternalServerError())
+  }
+}
+
+export async function authenticateUser(request: WithAuthRequest, response: Response, next: NextFunction) {
+  try {
+    const decoded = request.decodedUser;
+    if (!decoded) {
+      next(new NotFoundError('User not found!'));
+      return;
+    }
+    const user = await usersService.getUserByEmail(decoded.email);
+    response.status(200).json(user);
+  } catch (error) {
     next(new InternalServerError())
   }
 }
