@@ -17,11 +17,6 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: 'This is a product'
   },
-  size: {
-    type: String,
-    default: 'M',
-    enum: ['S', 'M', 'L']
-  },
   image: {
     type: String,
     default: 'https://picsum.photos/800'

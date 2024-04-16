@@ -11,10 +11,6 @@ export const OrderSchema = new mongoose.Schema({
       type: OrderProductSchema
     }
   ],
-  totalPrice: {
-    type: Number,
-    default: 100
-  },
   createdAt: {
     type: Date,
     default: Date.now()

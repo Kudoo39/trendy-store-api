@@ -10,7 +10,8 @@ const router = express.Router()
 router.get('/', verifyJWT, adminCheck, getAllOrders)
 
 // A USER CREATES AN ORDER
-router.post('/:userId', verifyJWT, createOrder)
+// router.post('/:userId', verifyJWT, createOrder)
+router.post('/:userId', createOrder)
 
 // GET AN ORDER BY USER ID
 router.get('/:userId', verifyJWT, getOrder)
