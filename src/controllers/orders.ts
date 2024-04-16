@@ -21,9 +21,9 @@ export async function getAllOrders(_: Request, response: Response, next: NextFun
 export async function createOrder(request: Request, response: Response, next: NextFunction) {
   try {
     const userId = request.params.userId
-    const { products, totalPrice } = request.body
+    const { products } = request.body
 
-    const newData = new Order({ products, totalPrice })
+    const newData = new Order({ products })
     const newOrder = await ordersService.createOrder(newData)
 
     await User.findByIdAndUpdate(userId, { $push: { orders: newOrder } })
