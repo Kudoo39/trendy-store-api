@@ -11,7 +11,7 @@ const getAllProducts = async (
   try {
     const totalProduct = await Product.countDocuments()
     const products = await Product.find({
-      title: { $regex: searchQuery },
+      title: { $regex: new RegExp(searchQuery, 'i') },
       price: { $gte: minPrice, $lte: maxPrice }
     })
       // .sort({ title: 1 })
@@ -40,7 +40,7 @@ const getCategoryProducts = async (
     const totalProduct = await Product.countDocuments({ categoryId })
     const products = await Product.find({
       categoryId,
-      title: { $regex: searchQuery },
+      title: { $regex: new RegExp(searchQuery, 'i') },
       price: { $gte: minPrice, $lte: maxPrice }
     })
       .populate({
