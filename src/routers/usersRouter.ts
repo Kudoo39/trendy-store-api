@@ -27,7 +27,8 @@ router.post('/login', validateLoginUser, loginUser)
 router.post('/', validateCreateUser, createUser)
 
 // UPDATE USER
-router.put('/:userId', verifyJWT, updatedUser)
+// router.put('/:userId', verifyJWT, updatedUser)
+router.put('/:userId', updatedUser)
 
 // CHANGE PASSWORD
 router.patch('/password', updatedPassword)

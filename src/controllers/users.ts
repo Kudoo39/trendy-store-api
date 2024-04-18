@@ -157,7 +157,10 @@ export async function requestPassword(request: Request, response: Response, next
     const userId = user._id
 
     request.body.password = '123'
-    await usersService.updateUser(userId, request.body)
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(request.body.password, salt);
+    await usersService.updateUser(userId, { password: hashedPassword })
 
     response
       .status(200)

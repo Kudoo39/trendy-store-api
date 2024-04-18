@@ -27,9 +27,11 @@ router.post('/', createProduct)
 router.get('/:productId', getProduct)
 
 // UPDATE A PRODUCT
-router.put('/:productId', verifyJWT, adminCheck, updateProduct)
+// router.put('/:productId', verifyJWT, adminCheck, updateProduct)
+router.put('/:productId', updateProduct)
 
 // DELETE A PRODUCT
-router.delete('/:productId', verifyJWT, adminCheck, deleteProduct)
+// router.delete('/:productId', verifyJWT, adminCheck, deleteProduct)
+router.delete('/:productId', deleteProduct)
 
 export default router
