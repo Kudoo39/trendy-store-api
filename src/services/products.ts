@@ -7,14 +7,17 @@ const getAllProducts = async (
   searchQuery: string,
   minPrice: number,
   maxPrice: number
-): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
+): Promise<{ totalProduct: number, products: ProductDocument[] }> => {
   try {
-    const totalProduct = await Product.countDocuments()
+    const totalProduct = await Product.countDocuments({
+      title: { $regex: new RegExp(searchQuery, 'i') },
+      price: { $gte: minPrice, $lte: maxPrice }
+    })
+    
     const products = await Product.find({
       title: { $regex: new RegExp(searchQuery, 'i') },
       price: { $gte: minPrice, $lte: maxPrice }
     })
-      // .sort({ title: 1 })
       .populate({
         path: 'categoryId',
         select: { name: 1 }
@@ -22,7 +25,8 @@ const getAllProducts = async (
       .limit(limit)
       .skip(offset)
       .exec()
-    return { totalProduct, products };
+
+    return { totalProduct, products }
   } catch (error) {
     throw new Error('Failed to fetch products')
   }
@@ -35,9 +39,14 @@ const getCategoryProducts = async (
   searchQuery: string,
   minPrice: number,
   maxPrice: number
-): Promise<{totalProduct: number; products: ProductDocument[]; }> => {
+): Promise<{ totalProduct: number, products: ProductDocument[] }> => {
   try {
-    const totalProduct = await Product.countDocuments({ categoryId })
+    const totalProduct = await Product.countDocuments({
+      categoryId,
+      title: { $regex: new RegExp(searchQuery, 'i') },
+      price: { $gte: minPrice, $lte: maxPrice }
+    })
+    
     const products = await Product.find({
       categoryId,
       title: { $regex: new RegExp(searchQuery, 'i') },
@@ -50,7 +59,8 @@ const getCategoryProducts = async (
       .limit(limit)
       .skip(offset)
       .exec()
-    return { totalProduct, products };
+
+    return { totalProduct, products }
   } catch (error) {
     throw new Error('Failed to fetch products')
   }
