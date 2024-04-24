@@ -4,14 +4,13 @@ import mongoose from 'mongoose'
 import categoriesService from '../services/categories'
 import Category, { CategoryDocument } from '../model/Category'
 import { BadRequest, InternalServerError, NotFoundError } from '../errors/ApiError'
-import apiErrorhandler from '../middlewares/apiErrorhandler'
 
 export async function getAllCategories(_: Request, response: Response, next: NextFunction) {
   try {
     const categories = await categoriesService.getAllCategories()
     response.status(200).json(categories)
   } catch (error) {
-    next(new InternalServerError('Internal error'))
+    next(new InternalServerError())
   }
 }
 
@@ -21,7 +20,7 @@ export async function createCategory(request: Request, response: Response, next:
     const newCategory = await categoriesService.createCategory(newData)
     response.status(201).json(newCategory)
   } catch (error) {
-    next(new InternalServerError('Internal error'))
+    next(new InternalServerError())
   }
 }
 
@@ -38,7 +37,7 @@ export async function getCategoryById(request: Request, response: Response, next
     }
 
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     next(error)
@@ -53,11 +52,11 @@ export async function updateCategory(request: Request, response: Response, next:
     response.status(200).json(updatedCategory)
   } catch (error) {
     if (error instanceof BadRequest) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -76,9 +75,8 @@ export async function deleteCategoryById(request: Request, response: Response, n
     const deletedCategory = categoriesService.deleteCategoryById(request.params.categoryId)
     response.status(204).json(deletedCategory)
   } catch (error) {
-    // handle error
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
     next(new InternalServerError())
   }

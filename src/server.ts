@@ -8,7 +8,7 @@ const PORT = process.env.PORT as string
 
 mongoose
   .connect(MONGODB_URL, {
-    dbName: 'sample_mflix'
+    dbName: 'e-commerce'
   })
   .then(() => {
     app.listen(PORT, () => {

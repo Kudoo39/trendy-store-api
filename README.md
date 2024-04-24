@@ -74,7 +74,7 @@ The following endpoints are available in the application:
 
 ## Error Handling
 
-Errors are handled centrally using custom error classes defined in the `errors/ApiErrors.ts` file. These errors are then caught and processed in the middleware `middlewares/apiErrorhandler.ts`.
+Errors are handled centrally using custom error classes defined in the `errors/ApiErrors.ts` file. These errors are then caught and processed in the middleware `middlewares/apiErrorHandler.ts`.
 
 ### Custom Error Classes
 
@@ -112,7 +112,7 @@ src
  ┃ ┗ ApiError.ts
  ┣ middlewares
  ┃ ┣ adminCheck.ts
- ┃ ┣ apiErrorhandler.ts
+ ┃ ┣ apiErrorHandler.ts
  ┃ ┗ verifyJWT.ts
  ┣ misc
  ┃ ┗ type.ts
