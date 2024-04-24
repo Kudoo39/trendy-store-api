@@ -10,6 +10,7 @@ import {
 } from '../controllers/products'
 import verifyJWT from '../middlewares/verifyJWT'
 import adminCheck from '../middlewares/adminCheck'
+import { validateCreateProduct } from '../validations/productValidation'
 
 const router = express.Router()
 
@@ -21,7 +22,7 @@ router.get('/category/:categoryId', getCategoryProducts)
 
 // CREATE A PRODUCT
 // router.post('/', verifyJWT, adminCheck, createProduct)
-router.post('/', createProduct)
+router.post('/', validateCreateProduct, createProduct)
 
 // GET A PRODUCT
 router.get('/:productId', getProduct)

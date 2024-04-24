@@ -9,6 +9,7 @@ import { BadRequest, InternalServerError, NotFoundError, ConflictError } from '.
 import User from '../model/User'
 import { WithAuthRequest } from '../misc/type'
 import { hashPassword } from '../utils/hashPassword'
+import generateToken from '../utils/generateToken'
 
 export async function getAllUsers(_: Request, response: Response, next: NextFunction) {
   try {
@@ -64,21 +65,8 @@ export async function loginUser(request: Request, response: Response, next: Next
       throw new BadRequest('Wrong password, please try again!')
     }
 
-    // CREATE TOKEN
-    const JWT_SECRET = process.env.JWT_SECRET as string
-
-    const token = jwt.sign(
-      {
-        // DO NOT PROVIDE PASSWORD HERE
-        email: userData.email,
-        role: userData.role,
-        _id: userData._id
-      },
-      JWT_SECRET,
-      {
-        expiresIn: '1h'
-      }
-    )
+    const token = generateToken(userData)
+    
     response.json({ userData, token })
   } catch (error) {
     if (error instanceof BadRequest) {
