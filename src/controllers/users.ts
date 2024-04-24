@@ -9,6 +9,7 @@ import { BadRequest, InternalServerError, NotFoundError, ConflictError } from '.
 import User from '../model/User'
 import apiErrorhandler from '../middlewares/apiErrorhandler'
 import { WithAuthRequest } from '../misc/type'
+import { hashPassword } from '../utils/hashPassword'
 
 export async function getAllUsers(_: Request, response: Response, next: NextFunction) {
   try {
@@ -29,9 +30,7 @@ export async function createUser(request: Request, response: Response, next: Nex
       throw new BadRequest('Invalid email')
     }
 
-    const saltRounds = 10
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const hashedPassword = await hashPassword(password)
 
     // set random avatar if users not provide
     const defaultAvatar = 'https://picsum.photos/800';
@@ -129,9 +128,7 @@ export async function updatedPassword(request: Request, response: Response, next
       throw new BadRequest('Wrong password, please try again!')
     }
     
-    const saltRounds = 10
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hashedNewPassword = await bcrypt.hash(newPassword, salt)
+    const hashedNewPassword = await hashPassword(newPassword)
     request.body.password = hashedNewPassword
 
     const updatedUserPassword = await usersService.changePassword(email, hashedNewPassword)
@@ -157,9 +154,7 @@ export async function requestPassword(request: Request, response: Response, next
     const userId = user._id
 
     request.body.password = '123'
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(request.body.password, salt);
+    const hashedPassword = await hashPassword(request.body.password)
     await usersService.updateUser(userId, { password: hashedPassword })
 
     response

@@ -17,31 +17,51 @@ const createCategory = async (category: CategoryDocument): Promise<CategoryDocum
   }
 }
 
-// To do: handle error
-const getCategoryById = async (id: string): Promise<CategoryDocument | undefined> => {
-  const foundCategory = await Category.findById(id)
-  if (foundCategory) {
-    return foundCategory
+const getCategoryById = async (id: string): Promise<CategoryDocument> => {
+  try {
+    const foundCategory = await Category.findById(id)
+    if (foundCategory) {
+      return foundCategory
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this category')
   }
-  throw new NotFoundError()
 }
 
 const deleteCategoryById = async (id: string) => {
-  const foundCategory = await Category.findByIdAndDelete(id)
-  if (foundCategory) {
-    return foundCategory
+  try {
+    const foundCategory = await Category.findByIdAndDelete(id)
+    if (foundCategory) {
+      return foundCategory
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this category')
   }
-  throw new NotFoundError()
 }
 
 const updateCategory = async (id: string, newInformation: Partial<CategoryDocument>) => {
-  const updatedCategory = await Category.findByIdAndUpdate(id, newInformation, {
-    new: true
-  })
-  if (updatedCategory) {
-    return updatedCategory
+  try {
+    const updatedCategory = await Category.findByIdAndUpdate(id, newInformation, {
+      new: true
+    })
+    if (updatedCategory) {
+      return updatedCategory
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this category')
   }
-  throw new NotFoundError()
 }
 
 export default {

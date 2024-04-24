@@ -1,11 +1,7 @@
 import { ConflictError, NotFoundError } from '../errors/ApiError'
 import User, { UserDocument } from '../model/User'
 
-// services: async function
-// talk to database
-// methods: find();
 const getAllUsers = async (): Promise<UserDocument[]> => {
-  // find: methods by mongoose
   try {
     return await User.find()
   } catch (error) {
@@ -41,7 +37,7 @@ const updateUser = async (userId: string, userData: Partial<UserDocument>): Prom
   }
 }
 
-const changePassword = async (email: string, newPassword: string): Promise<UserDocument | null> => {
+const changePassword = async (email: string, newPassword: string): Promise<UserDocument> => {
   try {    
     const foundUser = await User.findOne({ email });
 
@@ -68,11 +64,18 @@ const deleteUser = async (userId: string): Promise<boolean> => {
 }
 
 const getUserByEmail = async (email: string): Promise<UserDocument> => {
-  const foundUser = await User.findOne({ email })
-  if (foundUser) {
-    return foundUser
+  try {
+    const foundUser = await User.findOne({ email })
+    if (foundUser) {
+      return foundUser
+    }
+    throw new NotFoundError('This email is not existed!')
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this user'); 
   }
-  throw new NotFoundError('This email is not existed!')
 }
 
 export default { getAllUsers, createUser, updateUser, changePassword, deleteUser, getUserByEmail }
