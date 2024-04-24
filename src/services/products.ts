@@ -74,8 +74,9 @@ const createProduct = async (Product: ProductDocument): Promise<ProductDocument>
   }
 }
 
-const getProductById = async (id: string): Promise<ProductDocument | undefined> => {
-  const foundProduct = await Product.findById(id)
+const getProductById = async (id: string): Promise<ProductDocument> => {
+  try {
+    const foundProduct = await Product.findById(id)
     .populate({
       path: 'categoryId',
       select: { name: 1 }
@@ -84,24 +85,44 @@ const getProductById = async (id: string): Promise<ProductDocument | undefined> 
     return foundProduct
   }
   throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to fetch product by ID'); 
+  }
 }
 
 const deleteProductById = async (id: string) => {
-  const foundProduct = await Product.findByIdAndDelete(id)
+  try {
+    const foundProduct = await Product.findByIdAndDelete(id)
   if (foundProduct) {
     return foundProduct
   }
   throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to fetch product by ID'); 
+  }
 }
 
 const updateProduct = async (id: string, newInformation: Partial<ProductDocument>) => {
-  const updatedProduct = await Product.findByIdAndUpdate(id, newInformation, {
-    new: true
-  })
-  if (updatedProduct) {
-    return updatedProduct
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, newInformation, {
+      new: true
+    })
+    if (updatedProduct) {
+      return updatedProduct
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to fetch product by ID'); 
   }
-  throw new NotFoundError()
 }
 
 export default {

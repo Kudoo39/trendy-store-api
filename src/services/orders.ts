@@ -19,30 +19,51 @@ const createOrder = async (order: OrderDocument): Promise<OrderDocument> => {
 }
 
 // get orders by userId
-const getOrderByUserId = async (userId: string): Promise<UserDocument | undefined> => {
-  const foundOrder = await User.findById(userId)
-  if (foundOrder) {
-    return foundOrder
+const getOrderByUserId = async (userId: string): Promise<UserDocument> => {
+  try {
+    const foundOrder = await User.findById(userId)
+    if (foundOrder) {
+      return foundOrder
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this order');
   }
-  throw new NotFoundError()
 }
 
 const deleteOrderById = async (id: string) => {
-  const foundOrder = await Order.findByIdAndDelete(id)
-  if (foundOrder) {
-    return foundOrder
+  try {
+    const foundOrder = await Order.findByIdAndDelete(id)
+    if (foundOrder) {
+      return foundOrder
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this order');
   }
-  throw new NotFoundError()
 }
 
 const updateOrder = async (id: string, newInformation: Partial<OrderDocument>) => {
-  const updatedOrder = await Order.findByIdAndUpdate(id, newInformation, {
-    new: true
-  })
-  if (updatedOrder) {
-    return updatedOrder
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(id, newInformation, {
+      new: true
+    })
+    if (updatedOrder) {
+      return updatedOrder
+    }
+    throw new NotFoundError()
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error
+    }
+    throw new Error('Failed to find this order')
   }
-  throw new NotFoundError()
 }
 
 export default {
