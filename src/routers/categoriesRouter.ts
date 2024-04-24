@@ -11,6 +11,7 @@ import {
 import verifyJWT from '../middlewares/verifyJWT'
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 import adminCheck from '../middlewares/adminCheck'
+import { validateCreateCategory } from '../validations/categoryValidation'
 
 const router = express.Router()
 
@@ -22,7 +23,7 @@ router.get('/:categoryId', getCategoryById)
 
 // CREATE A CATEGORY
 // router.post("/", verifyJWT, adminCheck, createCategory);
-router.post('/', createCategory)
+router.post('/', validateCreateCategory, createCategory)
 
 // UPDATE A CATEGORY
 // router.put("/:categoryId", verifyJWT, adminCheck, updateCategory);

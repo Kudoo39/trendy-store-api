@@ -11,7 +11,7 @@ type UserSchema = Schema & {
   role?: Schema
 }
 
-export const createUserValidation: UserSchema = Joi.object({
+const createUserValidation: UserSchema = Joi.object({
   firstname: Joi.string().required().min(3).max(20).trim().strict(),
   lastname: Joi.string().required().min(1).max(20).trim().strict(),
   email: Joi.string().email().required(),
@@ -29,7 +29,7 @@ export const validateCreateUser = async (req: Request, res: Response, next: Next
   }
 }
 
-export const loginUserValidation: UserSchema = Joi.object({
+const loginUserValidation: UserSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required().min(3).max(50).trim().strict()
 }) as UserSchema
