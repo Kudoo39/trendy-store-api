@@ -7,7 +7,6 @@ import validator from 'validator'
 import usersService from '../services/users'
 import { BadRequest, InternalServerError, NotFoundError, ConflictError } from '../errors/ApiError'
 import User from '../model/User'
-import apiErrorhandler from '../middlewares/apiErrorhandler'
 import { WithAuthRequest } from '../misc/type'
 import { hashPassword } from '../utils/hashPassword'
 
@@ -25,14 +24,12 @@ export async function createUser(request: Request, response: Response, next: Nex
   try {
     const { firstname, lastname, email, password, role, avatar } = request.body
 
-    // Validate email
     if (!validator.isEmail(email)) {
       throw new BadRequest('Invalid email')
     }
 
     const hashedPassword = await hashPassword(password)
 
-    // set random avatar if users not provide
     const defaultAvatar = 'https://picsum.photos/800';
     const userAvatar = avatar ? avatar : defaultAvatar;
 
@@ -48,10 +45,7 @@ export async function createUser(request: Request, response: Response, next: Nex
     response.status(201).json(newUser)
   } catch (error) {
     if (error instanceof ConflictError) {
-      response.status(error.statusCode).json({
-        message: error.message
-      })
-      return
+      next(error)
     }
     next(new InternalServerError())
   }
@@ -66,7 +60,7 @@ export async function loginUser(request: Request, response: Response, next: Next
 
     const isMatched = await bcrypt.compare(password, hashedPassword)
 
-    if (isMatched === false && password !== hashedPassword) {
+    if (isMatched === false) {
       throw new BadRequest('Wrong password, please try again!')
     }
 
@@ -88,7 +82,7 @@ export async function loginUser(request: Request, response: Response, next: Next
     response.json({ userData, token })
   } catch (error) {
     if (error instanceof BadRequest) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     next(new InternalServerError())
@@ -102,7 +96,7 @@ export async function updatedUser(request: Request, response: Response, next: Ne
     response.status(200).json(updatedUser)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -124,7 +118,7 @@ export async function updatedPassword(request: Request, response: Response, next
 
     const isMatched = await bcrypt.compare(password, hashedPassword)
 
-    if (isMatched === false && password !== hashedPassword) {
+    if (isMatched === false) {
       throw new BadRequest('Wrong password, please try again!')
     }
     
@@ -136,11 +130,11 @@ export async function updatedPassword(request: Request, response: Response, next
     response.status(200).json(updatedUserPassword)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof BadRequest) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     next(new InternalServerError())
@@ -153,7 +147,7 @@ export async function requestPassword(request: Request, response: Response, next
     const user = await usersService.getUserByEmail(email)
     const userId = user._id
 
-    request.body.password = '123'
+    request.body.password = process.env.DEFAULT_PASSWORD
     const hashedPassword = await hashPassword(request.body.password)
     await usersService.updateUser(userId, { password: hashedPassword })
 
@@ -162,11 +156,11 @@ export async function requestPassword(request: Request, response: Response, next
       .json(`Your one-time password is ${request.body.password}, please log in and change immediately!`)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof BadRequest) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     next(new InternalServerError())
@@ -183,7 +177,7 @@ export async function deleteUser(request: Request, response: Response, next: Nex
     }
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -211,7 +205,6 @@ export async function authenticateUser(request: WithAuthRequest, response: Respo
   }
 }
 
-// BAN A USER
 export async function banUser(request: Request, response: Response, next: NextFunction) {
   try {
     const userId = request.params.userId
@@ -224,7 +217,6 @@ export async function banUser(request: Request, response: Response, next: NextFu
   }
 }
 
-// UNBAN A USER
 export async function unbanUser(request: Request, response: Response, next: NextFunction) {
   try {
     const userId = request.params.userId

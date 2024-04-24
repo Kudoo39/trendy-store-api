@@ -5,9 +5,7 @@ import ProductsService from '../services/products'
 import Product, { ProductDocument } from '../model/Product'
 import { InternalServerError, NotFoundError } from '../errors/ApiError'
 import { CategoryProductsQuery } from '../misc/type'
-import apiErrorhandler from '../middlewares/apiErrorhandler'
 
-// GET PRODUCTS
 export async function getAllProducts(request: Request, response: Response, next: NextFunction) {
   try {
     const {
@@ -31,7 +29,6 @@ export async function getAllProducts(request: Request, response: Response, next:
   }
 }
 
-// GET PRODUCTS BASED ON CATEGORY
 export async function getCategoryProducts(request: Request, response: Response, next: NextFunction) {
   try {
     const {
@@ -56,7 +53,6 @@ export async function getCategoryProducts(request: Request, response: Response, 
   }
 }
 
-// CREATE A PRODUCT
 export async function createProduct(request: Request, response: Response, next: NextFunction) {
   try {
     const newData = new Product(request.body)
@@ -67,14 +63,13 @@ export async function createProduct(request: Request, response: Response, next: 
   }
 }
 
-// GET A PRODUCT
 export async function getProduct(request: Request, response: Response, next: NextFunction) {
   try {
     const foundProduct = await ProductsService.getProductById(request.params.productId)
     response.status(200).json(foundProduct)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -88,7 +83,6 @@ export async function getProduct(request: Request, response: Response, next: Nex
   }
 }
 
-// UPDATE A PRODUCT
 export async function updateProduct(request: Request, response: Response, next: NextFunction) {
   try {
     const newData = request.body as Partial<ProductDocument>
@@ -96,7 +90,7 @@ export async function updateProduct(request: Request, response: Response, next: 
     response.status(200).json(foundProduct)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -110,7 +104,6 @@ export async function updateProduct(request: Request, response: Response, next: 
   }
 }
 
-// DELETE A PRODUCT
 export async function deleteProduct(request: Request, response: Response, next: NextFunction) {
   try {
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
@@ -118,7 +111,7 @@ export async function deleteProduct(request: Request, response: Response, next: 
     response.sendStatus(204)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {

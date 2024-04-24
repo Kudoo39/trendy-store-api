@@ -5,9 +5,7 @@ import ordersService from '../services/orders'
 import Order, { OrderDocument } from '../model/Order'
 import { InternalServerError, NotFoundError } from '../errors/ApiError'
 import User from '../model/User'
-import apiErrorhandler from '../middlewares/apiErrorhandler'
 
-// GET ORDERS
 export async function getAllOrders(_: Request, response: Response, next: NextFunction) {
   try {
     const orders = await ordersService.getAllOrders()
@@ -17,7 +15,6 @@ export async function getAllOrders(_: Request, response: Response, next: NextFun
   }
 }
 
-// CREATE AN ORDER
 export async function createOrder(request: Request, response: Response, next: NextFunction) {
   try {
     const userId = request.params.userId
@@ -34,14 +31,13 @@ export async function createOrder(request: Request, response: Response, next: Ne
   }
 }
 
-// GET AN ORDER
 export async function getOrder(request: Request, response: Response, next: NextFunction) {
   try {
     const foundOrder = await ordersService.getOrderByUserId(request.params.userId)
     response.status(200).json(foundOrder?.orders)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -55,7 +51,6 @@ export async function getOrder(request: Request, response: Response, next: NextF
   }
 }
 
-// UPDATE AN ORDER
 export async function updateOrder(request: Request, response: Response, next: NextFunction) {
   try {
     const newData = request.body as Partial<OrderDocument>
@@ -63,7 +58,7 @@ export async function updateOrder(request: Request, response: Response, next: Ne
     response.status(200).json(foundOrder)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
@@ -77,7 +72,6 @@ export async function updateOrder(request: Request, response: Response, next: Ne
   }
 }
 
-// DELETE AN ORDER
 export async function deleteOrder(request: Request, response: Response, next: NextFunction) {
   try {
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
@@ -85,7 +79,7 @@ export async function deleteOrder(request: Request, response: Response, next: Ne
     response.sendStatus(204)
   } catch (error) {
     if (error instanceof NotFoundError) {
-      apiErrorhandler(error, request, response, next)
+      next(error)
     }
 
     if (error instanceof mongoose.Error.CastError) {
