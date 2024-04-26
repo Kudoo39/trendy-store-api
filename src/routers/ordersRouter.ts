@@ -6,20 +6,10 @@ import adminCheck from '../middlewares/adminCheck'
 
 const router = express.Router()
 
-// GET ORDERS
 router.get('/', verifyJWT, adminCheck, getAllOrders)
-
-// A USER CREATES AN ORDER
-// router.post('/:userId', verifyJWT, createOrder)
-router.post('/:userId', createOrder)
-
-// GET AN ORDER BY USER ID
+router.post('/:userId', verifyJWT, createOrder)
 router.get('/:userId', verifyJWT, getOrder)
-
-// UPDATE AN ORDER
 router.put('/:orderId', verifyJWT, updateOrder)
-
-// DELETE AN ORDER
 router.delete('/:orderId', verifyJWT, deleteOrder)
 
 export default router
