@@ -210,6 +210,7 @@ export async function unbanUser(request: Request, response: Response, next: Next
     const userId = request.params.userId
 
     const updatedUser = await usersService.updateUser(userId, { banStatus: false })
+    console.log(updatedUser?.banStatus, 'check status')
 
     response.status(200).json({ message: 'User unbanned successfully!', user: updatedUser })
   } catch (error) {

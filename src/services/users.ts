@@ -23,15 +23,7 @@ const createUser = async (user: UserDocument): Promise<UserDocument> => {
 
 const updateUser = async (userId: string, userData: Partial<UserDocument>): Promise<UserDocument | null> => {
   try {
-    const { firstname, lastname, email, password } = userData;
-
-    const updatedData: Partial<UserDocument> = {};
-    if (firstname) updatedData.firstname = firstname;
-    if (lastname) updatedData.lastname = lastname;
-    if (email) updatedData.email = email;
-    if (password) updatedData.password = password;
-
-    return await User.findByIdAndUpdate(userId, updatedData, { new: true })
+    return await User.findByIdAndUpdate(userId, userData, { new: true })
   } catch (error) {
     throw new NotFoundError()
   }

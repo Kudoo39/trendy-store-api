@@ -14,25 +14,11 @@ import { validateCreateProduct } from '../validations/productValidation'
 
 const router = express.Router()
 
-// GET PRODUCTS
 router.get('/', getAllProducts)
-
-// GET PRODUCTS BY CATEGORY
 router.get('/category/:categoryId', getCategoryProducts)
-
-// CREATE A PRODUCT
-// router.post('/', verifyJWT, adminCheck, createProduct)
-router.post('/', validateCreateProduct, createProduct)
-
-// GET A PRODUCT
 router.get('/:productId', getProduct)
-
-// UPDATE A PRODUCT
-// router.put('/:productId', verifyJWT, adminCheck, updateProduct)
-router.put('/:productId', updateProduct)
-
-// DELETE A PRODUCT
-// router.delete('/:productId', verifyJWT, adminCheck, deleteProduct)
-router.delete('/:productId', deleteProduct)
+router.post('/', validateCreateProduct, verifyJWT, adminCheck, createProduct)
+router.put('/:productId', verifyJWT, adminCheck, updateProduct)
+router.delete('/:productId', verifyJWT, adminCheck, deleteProduct)
 
 export default router
