@@ -26,8 +26,8 @@ Before you begin, ensure you have the following installed:
 
 To get started with the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/Kudoo39/e-commerce`
-2. Navigate to the project directory: `cd e-commerce`
+1. Clone the repository: `git clone https://github.com/Kudoo39/trending-api`
+2. Navigate to the project directory: `cd trending-api`
 3. Install dependencies: `npm install` or `yarn install`
 4. Run the project: `npm run start` or `yarn start`
 5. Run the application in developer mode: `npm run dev`
@@ -51,7 +51,9 @@ The following endpoints are available in the application:
 - POST /users: Register a new user.
 - POST /users/login: Login a user.
 - PUT /users/:userId: Update a user.
+- PATCH /users/password: Update user password.
 - DELETE /users/:userId: Delete a user.
+- GET /users/profile: Authenticate a user.
 - POST /users/:userId/ban: Ban a user.
 - POST /users/:userId/unban: Unban a user.
 - POST /users/password: Request a one-time password for a user.
@@ -87,8 +89,8 @@ Errors are handled centrally using custom error classes defined in the `errors/A
 
 ## Technologies Used
 
-- Node.js with Typescript
-- Express.js
+- Node.js / Express.js
+- TypeScript
 - Mongoose
 - Joi
 - nodemon
@@ -132,7 +134,12 @@ src
  ┃ ┣ orders.ts
  ┃ ┣ products.ts
  ┃ ┗ users.ts
+ ┣ utils
+ ┃ ┣ generateToken.ts
+ ┃ ┗ hashPassword.ts
  ┣ validations
+ ┃ ┣ categoryValidation.ts
+ ┃ ┣ productValidation.ts
  ┃ ┗ userValidation.ts
  ┣ app.ts
  ┗ server.ts

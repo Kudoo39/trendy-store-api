@@ -18,11 +18,9 @@ import { validateCreateUser, validateLoginUser } from '../validations/userValida
 
 const router = express.Router()
 
-router.get('/', verifyJWT, adminCheck, getAllUsers)
-
+router.get('/', getAllUsers)
 router.post('/login', validateLoginUser, loginUser)
 router.post('/', validateCreateUser, createUser)
-
 router.put('/:userId', verifyJWT, updatedUser)
 router.patch('/password', verifyJWT, updatedPassword)
 router.post('/password', requestPassword)
