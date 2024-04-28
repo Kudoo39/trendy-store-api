@@ -156,6 +156,6 @@ src
 
  ## Deployment
 
- - The project is deployed using Render: https://integrify-trending-api.onrender.com/
+ - The project is deployed using Render: https://trending-api-rggn.onrender.com/
 
 
