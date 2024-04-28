@@ -9,7 +9,7 @@ async function createCategory() {
 }
 
 //tear down
-describe("category controller test", () => {
+describe("category test", () => {
   // connect database
   let mongoHelper: MongoHelper;
 
