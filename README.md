@@ -30,7 +30,7 @@ To get started with the project, follow these steps:
 2. Navigate to the project directory: `cd trending-api`
 3. Install dependencies: `npm install` or `yarn install`
 4. Run the project: `npm run start` or `yarn start`
-5. Run the application in developer mode: `npm run dev`
+5. Run the application in developer mode: `npm run dev` or `yarn dev`
 
 ## Features
 
