@@ -1,4 +1,4 @@
-# E-commerce API
+# Trending Shop API
 
 A backend application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
@@ -156,6 +156,6 @@ src
 
  ## Deployment
 
- - The project is deployed using Render: https://integrify-trending-api.onrender.com/
+ - The project is deployed using Render: https://trending-api-rggn.onrender.com
 
 
