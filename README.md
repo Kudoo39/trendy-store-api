@@ -11,6 +11,7 @@ A backend application is built using Node.js, Express.js, Mongoose, and TypeScri
 5. [Error Handling](#error-handling)
 6. [Testing](#testing)
 7. [Deployment](#deployment)
+8. [CI/CD Workflow](#ci-cd-workflow)
 
 ## Getting Started
 
@@ -158,4 +159,7 @@ src
 
  - The project is deployed using Render: https://trending-api-rggn.onrender.com
 
+ ## CI/CD Workflow
+
+ - This GitHub Actions workflow is located in the `.github/workflows/backend-workflow.yaml`. It automates the build and test processes of the backend application as well as ensures the code quality.
 
