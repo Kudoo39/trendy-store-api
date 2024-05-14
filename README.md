@@ -1,6 +1,6 @@
 # Trending Shop API
 
-A backend application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
+A back-end application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
 ## Table of Contents
 
@@ -171,7 +171,4 @@ src
 
  ## CI/CD Workflow
 
- - This GitHub Actions workflow is located in the `.github/workflows/backend-workflow.yaml`. It automates the build and test processes of the backend application as well as ensures the code quality.
-
-My docker image name: kudoo39/trending-api
-Docker Hub: https://hub.docker.com/r/kudoo39/trending-api
+ - This GitHub Actions workflow is located in the `.github/workflows/backend-workflow.yaml`. It automates the build and test processes of the back-end application as well as ensures the code quality.
