@@ -9,6 +9,11 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
+      PORT: ${{ secrets.PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
