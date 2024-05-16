@@ -1,9 +1,9 @@
 name: Backend CI/CD
 on:
   push:
-    branches: [fullstack, master]
+    branches: [fullstack, master, dev]
   pull_request:
-    branches: [fullstack, master]
+    branches: [fullstack, master, dev]
 
 jobs:
   build:

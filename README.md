@@ -2,6 +2,8 @@
 
 A back-end application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
+Front-end Repository: [Front-end](https://github.com/Kudoo39/fs17-Frontend-project/tree/fullstack)
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
@@ -108,6 +110,7 @@ Errors are handled centrally using custom error classes defined in the `errors/A
 - JWT (JSON Web Tokens)
 - validator
 - jest
+- AWS EC2
 
 ## Project Structure
 
@@ -167,6 +170,7 @@ src
  ## Deployment
 
  - The project is deployed using Render: https://trending-api-rggn.onrender.com
+ - AWS Cloud: [AWS Cloud URL](http://ec2-13-53-200-173.eu-north-1.compute.amazonaws.com:8080/api/v1/products)
  - Docker Hub: [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
  ## CI/CD Workflow
