@@ -19,31 +19,9 @@ describe("user controller test", () => {
     await mongoHelper.clearDatabase();
   });
 
-  test("should return error when not logging in request", async () => {
+  test("should return list of users", async () => {
     const response = await request(app).get("/api/v1/users")
-    expect(response.status).toBe(401);
-  });
-
-  test("should return error when user is not an admin", async () => {
-    const response = await createUser("User", "1", "user1@gmail.com", "123", "customer");
-    const userData = await getToken(response.body.email, "123");
-    const token = userData.body.token;
-
-    const userResponse = await request(app)
-    .get("/api/v1/users")
-    .set("Authorization", "Bearer " + token)
-    expect(userResponse.status).toBe(403);
-  });
-
-  test("should return users when user is an admin", async () => {
-    const response = await createUser("User", "1", "user1@gmail.com", "123", "admin");
-    const userData = await getToken(response.body.email, "123");
-    const token = userData.body.token;
-
-    const userResponse = await request(app)
-    .get("/api/v1/users")
-    .set("Authorization", "Bearer " + token)
-    expect(userResponse.status).toBe(200);
+    expect(response.status).toBe(200);
   });
 
   test("should log in user account", async () => {

@@ -1,0 +1,43 @@
+name: Backend CI/CD
+on:
+  push:
+    branches: [fullstack, master]
+  pull_request:
+    branches: [fullstack, master]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
+      PORT: ${{ secrets.PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)"
+
+      - name: Set up cache!
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Tests
+        run: yarn test
