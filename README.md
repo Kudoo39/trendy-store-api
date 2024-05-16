@@ -1,6 +1,6 @@
 # Trending Shop API
 
-A backend application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
+A back-end application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
 ## Table of Contents
 
@@ -11,6 +11,7 @@ A backend application is built using Node.js, Express.js, Mongoose, and TypeScri
 5. [Error Handling](#error-handling)
 6. [Testing](#testing)
 7. [Deployment](#deployment)
+8. [CI/CD Workflow](#ci-cd-workflow)
 
 ## Getting Started
 
@@ -18,7 +19,7 @@ A backend application is built using Node.js, Express.js, Mongoose, and TypeScri
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (v18.18.0 or later recommended)
+- Node.js (v20.0.0 or later recommended)
 - npm (Node Package Manager) or yarn
 
 
@@ -31,6 +32,15 @@ To get started with the project, follow these steps:
 3. Install dependencies: `npm install` or `yarn install`
 4. Run the project: `npm run start` or `yarn start`
 5. Run the application in developer mode: `npm run dev` or `yarn dev`
+
+### Building and Running with Docker
+
+To pull the Docker image and run the container, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/Kudoo39/trending-api`
+2. Navigate to the project directory: `cd trending-api`
+3. Pull the Docker image: `docker pull kudoo39/trending-api`
+4. Run the Docker container: `docker run -p 8080:8080 kudoo39/trending-api`
 
 ## Features
 
@@ -156,6 +166,9 @@ src
 
  ## Deployment
 
- - The project is deployed using Render: https://trending-api-rggn.onrender.com/
+ - The project is deployed using Render: https://trending-api-rggn.onrender.com
+ - Docker Hub: [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
+ ## CI/CD Workflow
 
+ - This GitHub Actions workflow is located in the `.github/workflows/backend-workflow.yaml`. It automates the build and test processes of the back-end application as well as ensures the code quality.
