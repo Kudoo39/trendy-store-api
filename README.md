@@ -1,8 +1,8 @@
-# Trending Shop API
+# Trendy Store API
 
 A back-end application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
-Front-end Repository: [Front-end](https://github.com/Kudoo39/fs17-Frontend-project/tree/fullstack)
+Front-end Repository: [Front-end](https://github.com/Kudoo39/the-trendy-store)
 
 ## Table of Contents
 
@@ -29,8 +29,8 @@ Before you begin, ensure you have the following installed:
 
 To get started with the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/Kudoo39/trending-api`
-2. Navigate to the project directory: `cd trending-api`
+1. Clone the repository: `git clone https://github.com/Kudoo39/trendy-store-api`
+2. Navigate to the project directory: `cd trendy-store-api`
 3. Install dependencies: `npm install` or `yarn install`
 4. Run the project: `npm run start` or `yarn start`
 5. Run the application in developer mode: `npm run dev` or `yarn dev`
@@ -39,8 +39,8 @@ To get started with the project, follow these steps:
 
 To pull the Docker image and run the container, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/Kudoo39/trending-api`
-2. Navigate to the project directory: `cd trending-api`
+1. Clone the repository: `git clone https://github.com/Kudoo39/trendy-store-api`
+2. Navigate to the project directory: `cd trendy-store-api`
 3. Pull the Docker image: `docker pull kudoo39/trending-api`
 4. Run the Docker container: `docker run -p 8080:8080 kudoo39/trending-api`
 
@@ -50,41 +50,41 @@ The following endpoints are available in the application:
 
 ### Products
 
-- GET /products: Get all products.
-- GET /products/category/:categoryId: Get products by category.
-- POST /products: Create a new product.
-- GET /products/:productId: Get a product by ID.
-- PUT /products/:productId: Update a product.
-- DELETE /products/:productId: Delete a product.
+- GET /api/v1/products: Get all products.
+- GET /api/v1/products/category/:categoryId: Get products by category.
+- POST /api/v1/products: Create a new product. **(Authentication: Required, Authorization: Admin)**
+- GET /api/v1/products/:productId: Get a product by ID. 
+- PUT /api/v1/products/:productId: Update a product. **(Authentication: Required, Authorization: Admin)**
+- DELETE /api/v1/products/:productId: Delete a product. **(Authentication: Required, Authorization: Admin)**
 
 ### Users
 
-- GET /users: Get all users.
-- POST /users: Register a new user.
-- POST /users/login: Login a user.
-- PUT /users/:userId: Update a user.
-- PATCH /users/password: Update user password.
-- DELETE /users/:userId: Delete a user.
-- GET /users/profile: Authenticate a user.
-- POST /users/:userId/ban: Ban a user.
-- POST /users/:userId/unban: Unban a user.
-- POST /users/password: Request a one-time password for a user.
+- GET /api/v1/users: Get all users.
+- POST /api/v1/users: Register a new user.
+- POST /api/v1/users/login: Login a user.
+- PUT /api/v1/users/:userId: Update a user. **(Authentication: Required)**
+- PATCH /api/v1/users/password: Update user password. **(Authentication: Required)**
+- DELETE /api/v1/users/:userId: Delete a user. **(Authentication: Required, Authorization: Admin)**
+- GET /api/v1/users/profile: Authenticate a user. **(Authentication: Required)**
+- POST /api/v1/users/:userId/ban: Ban a user. **(Authentication: Required, Authorization: Admin)**
+- POST /api/v1/users/:userId/unban: Unban a user. **(Authentication: Required, Authorization: Admin)**
+- POST /api/v1/users/password: Request a one-time password for a user.
 
 ### Orders
 
-- GET /orders: Get all orders.
-- POST /orders/:userId: Create a new order for a user.
-- GET /orders/:userId: Get orders for a user.
-- PUT /orders/:orderId: Update an order.
-- DELETE /orders/:orderId: Delete an order.
+- GET /api/v1/orders: Get all orders. **(Authentication: Required, Authorization: Admin)**
+- POST /api/v1/orders/:userId: Create a new order for a user. **(Authentication: Required)**
+- GET /api/v1/orders/:userId: Get orders for a user. **(Authentication: Required)**
+- PUT /api/v1/orders/:orderId: Update an order. **(Authentication: Required)**
+- DELETE /api/v1/orders/:orderId: Delete an order. **(Authentication: Required)**
 
 ### Categories
 
-- GET /categories: Get all categories.
-- POST /categories: Create a new category.
-- GET /categories/:categoryId: Get a category by ID.
-- PUT /categories/:categoryId: Update a category.
-- DELETE /categories/:categoryId: Delete a category.
+- GET /api/v1/categories: Get all categories.
+- POST /api/v1/categories: Create a new category.
+- GET /api/v1/categories/:categoryId: Get a category by ID. **(Authentication: Required, Authorization: Admin)**
+- PUT /api/v1/categories/:categoryId: Update a category. **(Authentication: Required, Authorization: Admin)**
+- DELETE /api/v1/categories/:categoryId: Delete a category. **(Authentication: Required, Authorization: Admin)**
 
 ## Error Handling
 
@@ -111,6 +111,8 @@ Errors are handled centrally using custom error classes defined in the `errors/A
 - validator
 - jest
 - AWS EC2
+- Nginx
+- Certbot
 
 ## Project Structure
 
@@ -170,7 +172,7 @@ src
  ## Deployment
 
  - The project is deployed using Render: https://trending-api-rggn.onrender.com
- - AWS Cloud: [AWS Cloud URL](http://ec2-13-53-200-173.eu-north-1.compute.amazonaws.com:8080/api/v1/products)
+ - AWS Cloud: [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)[Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)[Custom Domain URL (HTTPS)](trendingapi.chickenkiller.com)
  - Docker Hub: [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
  ## CI/CD Workflow
