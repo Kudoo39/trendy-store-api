@@ -2,7 +2,7 @@
 
 A back-end application is built using Node.js, Express.js, Mongoose, and TypeScript. This application is designed to handle various CRUD operations related to products, users, orders, and categories. It utilizes MongoDB as its database.
 
-Front-end Repository: [Front-end](https://github.com/Kudoo39/the-trendy-store)
+Front-end Repository: [The Trendy Store](https://github.com/Kudoo39/the-trendy-store)
 
 ## Table of Contents
 
