@@ -172,7 +172,7 @@ src
  ## Deployment
 
  - The project is deployed using Render: https://trending-api-rggn.onrender.com
- - AWS Cloud: [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)[Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)[Custom Domain URL (HTTPS)](trendingapi.chickenkiller.com)
+ - AWS Cloud: [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)[Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)[Custom Domain URL (HTTPS)](https://trendingapi.chickenkiller.com/)
  - Docker Hub: [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
  ## CI/CD Workflow
