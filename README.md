@@ -4,6 +4,15 @@ A back-end application is built using Node.js, Express.js, Mongoose, and TypeScr
 
 Front-end Repository: [The Trendy Store](https://github.com/Kudoo39/the-trendy-store)
 
+**Access the Swagger page from this link:**
+
+[![Swagger Page](https://img.shields.io/badge/Swagger-Open%20API%20Specification-85EA2D.svg)](https://petstore.swagger.io/?url=https://gist.githubusercontent.com/Kudoo39/e79e0e952fb359fd5aa8a81070505daf/raw/2be3b4873af9fec199318fd7f1236f273697a997/gistfile1.txt#/)
+
+Click the button above to explore and test the API endpoints using Swagger.
+
+![App Screenshot](./src/assets/swagger1.png)
+![App Screenshot](./src/assets/swagger2.png)
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
@@ -170,10 +179,15 @@ src
 2. Run the test suite: `npm run test` or `yarn test`
 
  ## Deployment
-
- - The project is deployed using Render: https://trending-api-rggn.onrender.com
- - AWS Cloud: [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)[Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)[Custom Domain URL (HTTPS)](https://trendingapi.chickenkiller.com/)
- - Docker Hub: [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
+ #### Render:
+ + The project is deployed using Render: https://trending-api-rggn.onrender.com
+ #### AWS Cloud: 
+ + [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)
+ + [Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)
+ 
+ + [Custom Domain URL (HTTPS)](https://trendingapi.chickenkiller.com/)
+ #### Docker Hub: 
+ + [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
  ## CI/CD Workflow
 
