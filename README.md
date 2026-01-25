@@ -115,7 +115,7 @@ Errors are handled centrally using custom error classes defined in the `errors/A
 - Mongoose
 - Joi
 - nodemon
-- bcrypt
+- bcryptjs
 - JWT (JSON Web Tokens)
 - validator
 - jest

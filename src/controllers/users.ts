@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 import validator from 'validator'
 
 import usersService from '../services/users'
