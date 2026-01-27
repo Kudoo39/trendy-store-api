@@ -179,16 +179,40 @@ src
 2. Run the test suite: `npm run test` or `yarn test`
 
  ## Deployment
- #### Render:
- + The project is deployed using Render: https://trending-api-rggn.onrender.com
- #### AWS Cloud: 
- + [AWS Cloud URL, ](http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080)
- + [Alternative AWS Cloud URL, ](http://51.20.223.48:8080/)
- 
- + [Custom Domain URL (HTTPS)](https://trendingapi.chickenkiller.com/)
- #### Docker Hub: 
- + [kudoo39/trending-api](https://hub.docker.com/r/kudoo39/trending-api)
 
+This project is deployed using multiple approaches to demonstrate different deployment strategies and cloud service models (IaaS, PaaS, and containerization).
+
+### Primary Deployment – Microsoft Azure VM (IaaS)
+
+- Hosted on a Linux virtual machine
+- Reverse proxied via **Nginx**
+- HTTPS enabled using **Let’s Encrypt (Certbot)**
+- Node.js application managed with **PM2** (auto-restart on reboot)
+
+---
+
+### Alternative Deployments
+
+#### Render (PaaS)
+Previously deployed using Render to demonstrate a platform-managed (PaaS) deployment:
+
+https://trending-api-rggn.onrender.com
+
+---
+
+#### AWS EC2 (IaaS – Direct Access)
+Earlier VM-based deployment on AWS EC2:
+
+- http://ec2-51-20-223-48.eu-north-1.compute.amazonaws.com:8080  
+- http://51.20.223.48:8080  
+- Custom Domain (HTTPS): https://trendingapi.chickenkiller.com/
+
+---
+
+#### Docker
+The application is containerized and published on Docker Hub:
+
+👉 https://hub.docker.com/r/kudoo39/trending-api
  ## CI/CD Workflow
 
  - This GitHub Actions workflow is located in the `.github/workflows/backend-workflow.yaml`. It automates the build and test processes of the back-end application as well as ensures the code quality.
